@@ -1,4 +1,4 @@
-#lang pl untyped ;; static scoping and dynamic-typing
+#lang pl ;; static scoping and static-typing
 
 (define x 22)
 (define (getx) x)
@@ -15,24 +15,29 @@
                  (lambda (x y) (+ x y)))) 
 (test (foo 6 7) => 42)
 
+(: foo2 : Number -> ( -> Number))
 (define (foo2 x)
 	(define (helper) (+ x 1))
   helper)
 
 (test ((foo2 0)) => 1)
 
+(: mycons : Number Number -> ((Number Number -> Number) -> Number))
 (define (mycons f s)
+  (: mypair : (Number Number -> Number) -> Number)
   (define (mypair selector)
     (selector f s))
   mypair)
 
-
+(: myfirst : ((Number Number -> Number) -> Number) -> Number)
 (define (myfirst p)
+  (: first-selector : Number Number -> Number)
   (define (first-selector f s) f)
   (p first-selector))
 
-
+(: mysecond : ((Number Number -> Number) -> Number) -> Number)
 (define (mysecond p)
+  (: second-selector : Number Number -> Number)
   (define (second-selector f s) s)
   (p second-selector))
 

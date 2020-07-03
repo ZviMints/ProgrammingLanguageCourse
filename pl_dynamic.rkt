@@ -20,3 +20,20 @@
   helper)
 
 (test ((foo 0)) => 23)
+
+(define (mycons f s)
+  (define (mypair selector)
+    (selector f s))
+  mypair)
+
+
+(define (myfirst p)
+  (define (first-selector f s) f)
+  (p first-selector))
+
+
+(define (mysecond p)
+  (define (second-selector f s) s)
+  (p second-selector))
+
+(test (myfirst (mycons 1 2)) => 1) ;; reference to undefined identifier: f
