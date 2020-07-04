@@ -1,7 +1,7 @@
 #lang pl
 
 (define counter
-  (let ([n 0])
+  (let ([n -1])
     (lambda ()
       (set! n (add1 n))
       n)))
@@ -180,7 +180,6 @@ lookup(x, extend(y,E,env') = lookup(x, env')
 
 
   ;;; Tests
-#|
 (test (parse "{ with {x {* 4 2}} {* x x}}") => (With 'x (Mul (Num 4) (Num 2)) (Mul (Id 'x) (Id 'x))))
 (test (parse "{fun {x} {+ x x}}") => (Fun 'x (Add (Id 'x) (Id 'x))))
 (test (parse "{call sqrt 5}") => (Call (Id 'sqrt) (Num 5)))
@@ -197,7 +196,6 @@ lookup(x, extend(y,E,env') = lookup(x, env')
                                  7 ;; Static Approach (subst)
                                  )
 (test (run "{with {f {fun {y} {+ x y}}} {with {x 7} {call f 1}}}") =error> "cannot")
-|#
 ;; (eval (With 'Mul-x (Fun 'x (Mul (Id 'x) (Id 'z))) (With 'z (Num 3) (Call (Id 'Mul-x) (Id 'z)))) (EmptyEnv))
      
    

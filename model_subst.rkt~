@@ -3,7 +3,7 @@
 
   #lang pl
 (define counter
-  (let ([n 0])
+  (let ([n -1])
     (lambda ()
       (set! n (add1 n))
       n)))
