@@ -1,6 +1,5 @@
 
   #lang pl
-
   (define-type FLANG
     [Num  Number]
     [Add  FLANG FLANG]
@@ -11,6 +10,12 @@
     [With Symbol FLANG FLANG]
     [Fun  Symbol FLANG]
     [Call FLANG FLANG])
+
+(define counter
+  (let ([n -1])
+    (lambda ()
+      (set! n (add1 n))
+      n)))
 
   (: parse-sexpr : Sexpr -> FLANG)
   ;; to convert s-expressions into FLANGs
@@ -71,6 +76,16 @@
   (: eval : FLANG SubstCache -> FLANG)
   ;; evaluates FLANG expressions by reducing them to expressions
   (define (eval expr sc)
+    (print (counter))
+    (printf "\n")
+    (print "exp:  ")
+    (print expr)
+    (printf "\n")
+    (print "sc: ")
+    (print sc)
+    (printf "\n")
+    (printf "--------------------------------------------")
+    (printf "\n")
     (cases expr
       [(Num n) expr]
       [(Add l r) (arith-op + (eval l sc) (eval r sc))]

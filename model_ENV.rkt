@@ -1,4 +1,11 @@
 #lang pl
+
+(define counter
+  (let ([n -1])
+    (lambda ()
+      (set! n (add1 n))
+      n)))
+ 
 #|
   <FLANG> ::= <num> | <id>
   | { + <FLANG> <FLANG> }
@@ -130,6 +137,16 @@ lookup(x, extend(y,E,env') = lookup(x, env')
 |#
 ( : eval : FLANG ENV -> VAL)
 (define (eval expr env)
+(print (counter))
+(printf "\n")
+(print "exp:  ")
+(print expr)
+(printf "\n")
+(print "env: ")
+(print env)
+(printf "\n")
+(printf "--------------------------------------------")
+(printf "\n")  
 (cases expr
   [(Num n) (NumV n)] ;; change
   [(Add l r) (arith-op + (eval l env) (eval r env)) ]
@@ -178,6 +195,7 @@ lookup(x, extend(y,E,env') = lookup(x, env')
                                  ;; 9 Dynamic Approach (SubstCache)
                                  7 ;; Static Approach (subst)
                                  )
-
+(test (run "{with {f {fun {y} {+ x y}}} {with {x 7} {call f 1}}}") =error> "cannot")
+;; (eval (With 'Mul-x (Fun 'x (Mul (Id 'x) (Id 'z))) (With 'z (Num 3) (Call (Id 'Mul-x) (Id 'z)))) (EmptyEnv))
      
    

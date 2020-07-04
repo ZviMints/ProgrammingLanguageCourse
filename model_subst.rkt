@@ -2,6 +2,11 @@
   ;; The Flang interpreter (substitution model)
 
   #lang pl
+(define counter
+  (let ([n -1])
+    (lambda ()
+      (set! n (add1 n))
+      n)))
 
   #|
   The grammar:
@@ -122,6 +127,13 @@
 (: eval : FLANG -> FLANG) 
 ;; evaluates FLANG expressions by reducing them to values
 (define (eval expr)
+(print (counter))
+(printf "\n")  
+(print "exp:  ")
+(print expr)
+(printf "\n")
+(printf "--------------------------------------------")
+(printf "\n")  
     (cases expr
       [(Num n) expr]
       [(Add l r) (arith-op + (eval l) (eval r))]
